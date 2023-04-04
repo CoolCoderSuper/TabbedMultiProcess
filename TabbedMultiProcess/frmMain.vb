@@ -29,6 +29,8 @@ Public Class frmMain
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         Dim p As Process = Process.Start("C:\CodingCool\Code\Projects\TabbedMultiProcess\ChildProcess\bin\Debug\net7.0-windows\ChildProcess.exe")
         p.WaitForInputIdle()
+        p.EnableRaisingEvents = True
+        AddHandler p.Exited, AddressOf p_Exited
         Dim t As New TabPage(p.MainWindowTitle)
         tcApps.TabPages.Add(t)
         While WindowsAPI.SetParent(p.MainWindowHandle, t.Handle) = IntPtr.Zero
@@ -37,6 +39,15 @@ Public Class frmMain
         WindowsAPI.ShowWindow(p.MainWindowHandle, WindowsConstants.SW_MAXIMIZE)
         SetBorderStyle(p)
         children.Add(t, p)
+    End Sub
+
+    Private Sub p_Exited(sender As Object, e As EventArgs)
+        For Each t As TabPage In tcApps.TabPages
+            If children(t) Is sender Then
+                tcApps.TabPages.Remove(t)
+                Exit For
+            End If
+        Next
     End Sub
 
     Private Sub SetBorderStyle(p As Process)
