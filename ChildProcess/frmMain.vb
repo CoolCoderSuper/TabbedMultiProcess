@@ -8,7 +8,7 @@ Public Class frmMain
         AddHandler client.MessageReceived, AddressOf MessageRecieved
     End Sub
 
-    Private Sub MessageRecieved(message() As Byte)
+    Private Async Sub MessageRecieved(message() As Byte)
         Dim coder As New ASCIIEncoding
         Dim cmd As String = coder.GetString(message)
         lblCommand.Text = cmd
@@ -23,6 +23,8 @@ Public Class frmMain
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Dim coder As New ASCIIEncoding
+        client.SendMessage(coder.GetBytes($"Closing:{Handle}"))
         CloseSafe()
     End Sub
 

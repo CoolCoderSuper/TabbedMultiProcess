@@ -2,17 +2,29 @@
 Imports System.Text
 Imports System.Threading
 
+'TODO: Add methods to PipeServer to send and receive strings
 Public Class frmMain
     Dim children As New Dictionary(Of TabPage, Process)
     Dim server As New PipeServer
 
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         server.Start("\\.\pipe\TestMaster1")
         AddHandler server.MessageReceived, AddressOf server_MessageReceived
     End Sub
 
     Private Sub server_MessageReceived(message() As Byte)
-        MessageBox.Show(New ASCIIEncoding().GetString(message))
+        Dim s As String = New ASCIIEncoding().GetString(message)
+        If s.Contains("Closing") Then
+            Dim handle As New IntPtr(CInt(s.Split(":")(1)))
+            For Each t As TabPage In tcApps.TabPages
+                If children(t).MainWindowHandle = handle Then
+                    Invoke(Sub() tcApps.TabPages.Remove(t))
+                    Exit For
+                End If
+            Next
+        Else
+            MessageBox.Show(s)
+        End If
     End Sub
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
@@ -51,5 +63,9 @@ Public Class frmMain
             WindowsAPI.MoveWindow(p.MainWindowHandle, 0, 0, t.Width, t.Height, True)
             SetBorderStyle(p)
         Next
+    End Sub
+
+    Private Sub btnBye_Click(sender As Object, e As EventArgs) Handles btnBye.Click
+        server.SendMessage(New ASCIIEncoding().GetBytes("Bye"))
     End Sub
 End Class
