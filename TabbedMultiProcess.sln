@@ -7,6 +7,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TabbedMultiProcess", "Tabbe
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ChildProcess", "ChildProcess\ChildProcess.vbproj", "{0CA2D514-EF63-46E1-B74B-FE463F3C7595}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89118B55-731F-4BA0-A66C-7E6DD14DD84E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
