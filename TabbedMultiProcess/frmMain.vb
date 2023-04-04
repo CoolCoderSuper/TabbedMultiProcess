@@ -2,7 +2,6 @@
 Imports System.Text
 Imports System.Threading
 
-'TODO: Add methods to PipeServer to send and receive strings
 Public Class frmMain
     Dim children As New Dictionary(Of TabPage, Process)
     Dim server As New PipeServer
@@ -13,7 +12,7 @@ Public Class frmMain
     End Sub
 
     Private Sub server_MessageReceived(message() As Byte)
-        Dim s As String = New ASCIIEncoding().GetString(message)
+        Dim s As String = Encoding.UTF8.GetString(message)
         If s.Contains("Closing") Then
             Dim handle As New IntPtr(CInt(s.Split(":")(1)))
             For Each t As TabPage In tcApps.TabPages
@@ -53,7 +52,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        server.SendMessage(New ASCIIEncoding().GetBytes($"Close:{children(tcApps.SelectedTab).MainWindowHandle}"))
+        server.SendMessage(Encoding.UTF8.GetBytes($"Close:{children(tcApps.SelectedTab).MainWindowHandle}"))
         tcApps.TabPages.Remove(tcApps.SelectedTab)
     End Sub
 
@@ -66,6 +65,6 @@ Public Class frmMain
     End Sub
 
     Private Sub btnBye_Click(sender As Object, e As EventArgs) Handles btnBye.Click
-        server.SendMessage(New ASCIIEncoding().GetBytes("Bye"))
+        server.SendMessage(Encoding.UTF8.GetBytes("Bye"))
     End Sub
 End Class

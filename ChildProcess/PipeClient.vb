@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports System.Threading
 Imports Microsoft.Win32.SafeHandles
 ''' <summary>
@@ -147,6 +148,15 @@ Public Class PipeClient
 
             RaiseEvent ServerDisconnected()
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Sends a message to all connected clients.
+    ''' </summary>
+    ''' <param name="messageString">The message to send.</param>
+    Public Sub SendMessage(messageString As String)
+        Dim message As Byte() = Encoding.UTF8.GetBytes(messageString)
+        SendMessage(message)
     End Sub
 
     ''' <summary>

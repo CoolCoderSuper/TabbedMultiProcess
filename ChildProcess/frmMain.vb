@@ -9,8 +9,7 @@ Public Class frmMain
     End Sub
 
     Private Async Sub MessageRecieved(message() As Byte)
-        Dim coder As New ASCIIEncoding
-        Dim cmd As String = coder.GetString(message)
+        Dim cmd As String = Encoding.UTF8.GetString(message)
         lblCommand.Text = cmd
         If cmd = $"Close:{Handle}" Then
             CloseSafe()
@@ -18,13 +17,11 @@ Public Class frmMain
     End Sub
 
     Private Sub btnHi_Click(sender As Object, e As EventArgs) Handles btnHi.Click
-        Dim coder As New ASCIIEncoding
-        client.SendMessage(coder.GetBytes("Hi"))
+        client.SendMessage(Encoding.UTF8.GetBytes("Hi"))
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Dim coder As New ASCIIEncoding
-        client.SendMessage(coder.GetBytes($"Closing:{Handle}"))
+        client.SendMessage(Encoding.UTF8.GetBytes($"Closing:{Handle}"))
         CloseSafe()
     End Sub
 
