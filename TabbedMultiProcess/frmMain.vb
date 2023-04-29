@@ -27,7 +27,7 @@ Public Class frmMain
     End Sub
 
     Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
-        Dim p As Process = Process.Start("C:\CodingCool\Code\Projects\TabbedMultiProcess\ChildProcess\bin\Debug\net7.0-windows\ChildProcess.exe")
+        Dim p As Process = Process.Start("C:\CodingCool\Code\Projects\TabbedMultiProcess\ChildProcess\bin\Debug\net7.0\ChildProcess.exe")
         p.WaitForInputIdle()
         p.EnableRaisingEvents = True
         AddHandler p.Exited, AddressOf p_Exited
