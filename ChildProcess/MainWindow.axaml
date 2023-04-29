@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ChildProcess.MainWindow"
+        Title="ChildProcess">
+	<Grid RowDefinitions="20,30,30,30,20,20">
+		<Label>Awesome test</Label>
+		<Button Name="btnClickMe" Grid.Row="1">Click me</Button>
+		<Button Name="btnHi" Grid.Row="2">Hi</Button>
+		<Button Name="btnClose" Grid.Row="3">Close</Button>
+		<Label Name="lblNumber" Grid.Row="4"></Label>
+		<Label Name="lblCommand" Grid.Row="5"></Label>
+	</Grid>
+</Window>

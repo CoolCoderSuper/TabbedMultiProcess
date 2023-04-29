@@ -44,7 +44,11 @@ Public Class frmMain
     Private Sub p_Exited(sender As Object, e As EventArgs)
         For Each t As TabPage In tcApps.TabPages
             If children(t) Is sender Then
-                tcApps.TabPages.Remove(t)
+                Try
+                    Invoke(Sub() tcApps.TabPages.Remove(t))
+                Catch ex As Exception
+
+                End Try
                 Exit For
             End If
         Next
