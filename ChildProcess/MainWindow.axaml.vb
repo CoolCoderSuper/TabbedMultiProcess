@@ -23,10 +23,10 @@ Partial Public Class MainWindow
         AddHandler client.MessageReceived, AddressOf MessageReceived
     End Sub
 
-    Private Async Sub MessageReceived(message() As Byte)
+    Private Sub MessageReceived(message() As Byte)
         Dim cmd As String = Encoding.UTF8.GetString(message)
         Dispatcher.UIThread.Post(Sub() lblCommand.Content = cmd, DispatcherPriority.Background)
-        If cmd = $"Close:{PlatformImpl.Handle.Handle}" Then
+        If cmd = $"Close:{TryGetPlatformHandle.Handle}" Then
             CloseSafe()
         End If
     End Sub
@@ -41,7 +41,7 @@ Partial Public Class MainWindow
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As RoutedEventArgs) Handles btnClose.Click
-        client.SendMessage(Encoding.UTF8.GetBytes($"Closing:{PlatformImpl.Handle.Handle}"))
+        client.SendMessage(Encoding.UTF8.GetBytes($"Closing:{TryGetPlatformHandle.Handle}"))
         CloseSafe()
     End Sub
 End Class
